@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+data/*
+!data/**/
+models/*
+!models/.gitkeep
+checkpoints/*
+!checkpoints/.gitkeep
+logs/*
+!logs/.gitkeep
+.streamlit/

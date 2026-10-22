@@ -1,0 +1,9 @@
+[
+  {
+    "rows":100000,
+    "mean_amount":3225.8,
+    "median_amount":2073.06,
+    "stddev_amount":3509.99,
+    "simulated_fraud_count":10181
+  }
+]

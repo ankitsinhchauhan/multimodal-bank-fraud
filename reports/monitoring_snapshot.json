@@ -1,0 +1,13 @@
+{
+  "timestamp_epoch": 1792573118.053667,
+  "checks": {
+    "transactions_csv_exists": true,
+    "reports_validation_report.json_exists": true,
+    "reports_model_metrics.json_exists": true,
+    "data_streaming_window_results_exists": true
+  },
+  "transaction_rows": 100000,
+  "null_cells": 0,
+  "fraud_rate": 0.10181,
+  "amount_mean": 3225.795674
+}

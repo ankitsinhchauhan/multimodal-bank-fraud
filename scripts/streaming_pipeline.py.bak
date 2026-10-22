@@ -1,0 +1,55 @@
+"""Member 2: Spark Structured Streaming Kafka consumer with event-time windows."""
+import os
+from pathlib import Path
+from pyspark.sql import SparkSession, functions as F
+from pyspark.sql.types import *
+
+ROOT=Path(__file__).resolve().parents[1]
+BOOTSTRAP=os.environ.get("KAFKA_BOOTSTRAP","localhost:9092")
+TOPIC=os.environ.get("KAFKA_TOPIC","bank-transactions")
+CHECKPOINT=str(ROOT/"checkpoints/kafka_window")
+OUTPUT=str(ROOT/"data/streaming/window_results")
+
+schema=StructType([
+ StructField("event_id",StringType()),StructField("event_type",StringType()),
+ StructField("transaction_id",StringType()),StructField("customer_id",StringType()),
+ StructField("event_time",StringType()),StructField("amount",DoubleType()),
+ StructField("device",StructType([StructField("device_id",StringType()),StructField("os",StringType())])),
+ StructField("transaction",StructType([
+  StructField("type",StringType()),StructField("merchant_category",StringType()),
+  StructField("payment_method",StringType())
+ ])),
+ StructField("location",StringType()),StructField("fraud_label",IntegerType())
+])
+spark=(SparkSession.builder.appName("BankFraudStreaming")
+ .config("spark.sql.shuffle.partitions","4").getOrCreate())
+spark.sparkContext.setLogLevel("WARN")
+
+kafka=(spark.readStream.format("kafka")
+ .option("kafka.bootstrap.servers",BOOTSTRAP)
+ .option("subscribe",TOPIC)
+ .option("startingOffsets","earliest")
+ .option("failOnDataLoss","false")
+ .load())
+parsed=(kafka.select(F.from_json(F.col("value").cast("string"),schema).alias("e"))
+ .select("e.*")
+ .withColumn("event_ts",F.to_timestamp("event_time"))
+ .filter(F.col("transaction_id").isNotNull())
+ .filter(F.col("event_ts").isNotNull())
+ .filter(F.col("amount").isNotNull() & (F.col("amount")>0)))
+
+windows=(parsed.withWatermark("event_ts","2 minutes")
+ .groupBy(F.window("event_ts","5 minutes","1 minute"),F.col("location"))
+ .agg(F.count("*").alias("transaction_count"),
+      F.round(F.sum("amount"),2).alias("total_amount"),
+      F.sum(F.when(F.col("amount")>=75000,1).otherwise(0)).alias("high_value_count"))
+ .withColumn("window_start",F.col("window.start").cast("string"))
+ .withColumn("window_end",F.col("window.end").cast("string"))
+ .drop("window")
+ .withColumn("alert_level",F.when((F.col("transaction_count")>=20)|(F.col("high_value_count")>0),"REVIEW").otherwise("NORMAL")))
+
+query=(windows.writeStream.outputMode("append").format("parquet")
+ .option("path",OUTPUT).option("checkpointLocation",CHECKPOINT)
+ .trigger(processingTime="10 seconds").start())
+print(f"Streaming from {TOPIC} at {BOOTSTRAP}; output={OUTPUT}")
+query.awaitTermination()

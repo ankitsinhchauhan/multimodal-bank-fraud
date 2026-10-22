@@ -1,0 +1,39 @@
+{
+  "models": {
+    "logistic_regression": {
+      "roc_auc": 0.9772898346364662,
+      "accuracy": 0.9766646549989941,
+      "precision_weighted": 0.9767478772020347,
+      "recall_weighted": 0.9766646549989941,
+      "f1_weighted": 0.9767047072327083,
+      "confusion_counts": {
+        "actual_1_predicted_1": 1829,
+        "actual_0_predicted_1": 240,
+        "actual_1_predicted_0": 224,
+        "actual_0_predicted_0": 17591
+      }
+    },
+    "random_forest": {
+      "roc_auc": 0.999927391021449,
+      "accuracy": 0.9987427077046872,
+      "precision_weighted": 0.9987424502652008,
+      "recall_weighted": 0.9987427077046872,
+      "f1_weighted": 0.9987425721905214,
+      "confusion_counts": {
+        "actual_1_predicted_1": 2040,
+        "actual_0_predicted_1": 12,
+        "actual_1_predicted_0": 13,
+        "actual_0_predicted_0": 17819
+      }
+    }
+  },
+  "train_rows": 80116,
+  "test_rows": 19884,
+  "label_notice": "Labels are synthetic rule-derived labels; scores measure agreement with those rules, not real-bank fraud performance.",
+  "risk_thresholds": {
+    "LOW": "0.00-0.29",
+    "MEDIUM": "0.30-0.59",
+    "HIGH": "0.60-0.79",
+    "CRITICAL": "0.80-1.00"
+  }
+}

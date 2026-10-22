@@ -1,0 +1,50 @@
+{
+  "descriptive": {
+    "count": 100000,
+    "mean": 3225.795674,
+    "median": 2073.25,
+    "mode": 97.85,
+    "stddev": 3509.993066517673,
+    "variance": 12320051.327002138,
+    "p95": 10983.86599999987,
+    "p99": 17861.202799999992,
+    "mean_95_ci": [
+      3204.040511583274,
+      3247.550836416726
+    ]
+  },
+  "exploratory": {
+    "iqr": 1872.74,
+    "lower_fence": -1211.7525000000003,
+    "upper_fence": 6279.2075,
+    "zscore_abs_gt_3_count": 3829
+  },
+  "diagnostic": {
+    "transaction_type_by_label": {
+      "0": {
+        "ATM": 14086,
+        "BankTransfer": 15915,
+        "Card": 21242,
+        "Online": 21077,
+        "UPI": 17499
+      },
+      "1": {
+        "ATM": 1530,
+        "BankTransfer": 1794,
+        "Card": 2456,
+        "Online": 2476,
+        "UPI": 1925
+      }
+    },
+    "chi_square_statistic": 7.809543879253717,
+    "chi_square_p_value": 0.0988093203472251,
+    "degrees_of_freedom": 4,
+    "amount_label_correlation": 0.2029650798218123
+  },
+  "hypothesis_test": {
+    "H0": "Mean transaction amount is equal in the two simulated label groups.",
+    "welch_t_statistic": -36.88632720956519,
+    "p_value": 1.9154407736264439e-280,
+    "warning": "These tests describe rule-generated synthetic labels and do not establish causality."
+  }
+}

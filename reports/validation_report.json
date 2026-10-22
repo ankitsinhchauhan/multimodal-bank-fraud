@@ -1,0 +1,27 @@
+{
+  "checks": {
+    "exactly_100k_transactions": true,
+    "unique_transaction_ids": true,
+    "no_missing_cells": true,
+    "binary_fraud_label": true,
+    "positive_amounts": true,
+    "timestamps_parse": true,
+    "parquet_exists": true,
+    "events_match_transaction_count": true,
+    "all_events_valid": true,
+    "complaints_valid": true,
+    "complaint_count_5000": true
+  },
+  "passed": 11,
+  "total": 11,
+  "transaction_rows": 100000,
+  "event_rows": 100000,
+  "complaint_rows": 5000,
+  "null_cells": 0,
+  "duplicate_rows": 0,
+  "fraud_distribution": {
+    "0": 89819,
+    "1": 10181
+  },
+  "notice": "Integrity checks do not prove real-world statistical fidelity."
+}

@@ -1,0 +1,12 @@
+{
+  "expected_transactions": 100000,
+  "actual_transactions": 100000,
+  "unique_transaction_ids": 100000,
+  "null_cells": 0,
+  "duplicate_rows": 0,
+  "fraud_label_distribution": {
+    "0": 89819,
+    "1": 10181
+  },
+  "notice": "Entirely synthetic demonstration data. Labels are rule-derived, not real fraud outcomes."
+}
