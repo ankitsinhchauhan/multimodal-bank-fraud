@@ -1,4 +1,4 @@
-# Multimodal Bank Fraud Mini-Project: Complete Execution Guide
+# Bank Fraud Mini-Project: Complete Execution Guide
 
 This document contains the step-by-step commands to set up, run, and monitor the Multimodal Bank Fraud Mini-Project in Ubuntu WSL, along with the expected output for each step.
 
